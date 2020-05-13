@@ -1,0 +1,5 @@
+<Project>
+  <PropertyGroup Label="Microsoft">
+    <MicrosoftAspNetCorePackageVersion>[3.*, )</MicrosoftAspNetCorePackageVersion>
+  </PropertyGroup>
+</Project>
