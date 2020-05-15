@@ -1,5 +1,6 @@
 <Project>
   <PropertyGroup Label="Microsoft">
     <MicrosoftAspNetCorePackageVersion>[3.*, )</MicrosoftAspNetCorePackageVersion>
+    <AutoMapperPackageVersion>[7.*, )</AutoMapperPackageVersion>
   </PropertyGroup>
 </Project>
