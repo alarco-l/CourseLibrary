@@ -30,7 +30,7 @@ namespace CourseLibrary.API.Controllers
             return Ok(_mapper.Map<IEnumerable<AuthorDto>>(authors));
         }
 
-        [HttpGet("{authorId:guid}")]
+        [HttpGet("{authorId:guid}", Name = "GetAuthor")]
         [HttpHead("{authorId:guid}")]
         public IActionResult GetAuthor(Guid authorId)
         {
@@ -42,6 +42,25 @@ namespace CourseLibrary.API.Controllers
             }
 
             return Ok(_mapper.Map<AuthorDto>(author));
+        }
+
+        [HttpPost]
+        public ActionResult<AuthorDto> CreateAuthor([FromBody] AuthorForCreationDto author)
+        {
+            // author null check is done by apicontroller attribute, no need to do it. It will handle return badrequest
+            var authorEntity = _mapper.Map<Entities.Author>(author);
+            _courseLibraryRepository.AddAuthor(authorEntity);
+            _courseLibraryRepository.Save();
+
+            var authorDto = _mapper.Map<AuthorDto>(authorEntity);
+            return CreatedAtRoute("GetAuthor", new {authorId = authorDto.Id}, authorDto);
+        }
+
+        [HttpOptions]
+        public IActionResult GetAuthorsOptions()
+        {
+            Response.Headers.Add("Allow", "GET, OPTIONS, POST");
+            return Ok();
         }
     }
 }
