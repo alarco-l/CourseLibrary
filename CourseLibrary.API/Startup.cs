@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json.Serialization;
 
 namespace CourseLibrary.API
 {
@@ -32,6 +33,9 @@ namespace CourseLibrary.API
                // If accept header not available, it will not be default and return 406 Not Acceptable status code
                options.ReturnHttpNotAcceptable = true;
                // The first ouput formatter in the list, is the default one.
+           })
+           .AddNewtonsoftJson(options => {
+               options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
            })
            .AddXmlDataContractSerializerFormatters()
            .ConfigureApiBehaviorOptions(setupAction => {
